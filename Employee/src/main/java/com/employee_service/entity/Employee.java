@@ -44,5 +44,4 @@ public class Employee {
 
     @Column(name = "hire_date", nullable = false)
     private LocalDate hireDate;
-
 }
