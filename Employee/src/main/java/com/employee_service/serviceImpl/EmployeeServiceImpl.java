@@ -90,6 +90,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public EmployeeResponse getByEmployeeCode(String employeeCode) {
+        Employee employee = employeeRepo.findByEmployeeCode(employeeCode)
+                .orElseThrow(()-> new ResourceNotFoundException("Employee Not Found with Name :" + employeeCode));
+        return mapToResponse(employee);
+    }
+
+    @Override
+    public List<EmployeeResponse> getByEmpName(String empName) {
+        List<Employee> employees = employeeRepo.findByEmpNameContainingIgnoreCase(empName);
+        if (employees.isEmpty()){
+            throw new ResourceNotFoundException("Employee not Found with name : " + empName);
+        }
+        return employees.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public EmployeeResponse updateEmployee(Long id, EmployeeRequest request) {
 
         Employee employee = employeeRepo.findById(id)
@@ -113,12 +131,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee Not Found with ID : " + id));
         employeeRepo.delete(employee);
-    }
-
-    @Override
-    public EmployeeResponse getByEmployeeCodeAndEmpName(String employeeCode, String empName) {
-        Employee employee = employeeRepo.findByEmployeeCodeAndEmpName(employeeCode, empName)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee Nt Found with Employee Code :" + employeeCode + "and Employee Name :" + empName));
-        return mapToResponse(employee);
     }
 }
