@@ -36,6 +36,12 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<EmployeeResponse> getEmpByCodeAndName(@RequestParam String employeeCode, @RequestParam String empName){
+        EmployeeResponse employeeResponse = employeeService.getByEmployeeCodeAndEmpName(employeeCode, empName);
+        return new ResponseEntity<>(employeeResponse, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeResponse> updateEmpByID(@PathVariable Long id,@Valid @RequestBody EmployeeRequest request){
         EmployeeResponse response = employeeService.updateEmployee(id,request);
