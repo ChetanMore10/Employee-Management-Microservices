@@ -10,5 +10,4 @@ public class EmployeeApplication {
 		SpringApplication.run(EmployeeApplication.class, args);
         System.err.println("Application started Successfully..!");
 	}
-
 }

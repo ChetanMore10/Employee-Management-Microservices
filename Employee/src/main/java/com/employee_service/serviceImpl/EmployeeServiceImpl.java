@@ -3,6 +3,8 @@ package com.employee_service.serviceImpl;
 import com.employee_service.dto.EmployeeRequest;
 import com.employee_service.dto.EmployeeResponse;
 import com.employee_service.entity.Employee;
+import com.employee_service.exception.DuplicateResourceException;
+import com.employee_service.exception.ResourceNotFoundException;
 import com.employee_service.repository.EmployeeRepo;
 import com.employee_service.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponse addEmployee(EmployeeRequest request) {
 
         if (employeeRepo.existsByEmail(request.getEmail())){
-            throw new RuntimeException("Email Already Exists...");
+            throw new DuplicateResourceException("Email Already Exists...");
         }
 
         Employee employee = mapToEntity(request);
@@ -71,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> employees = employeeRepo.findAll();
 
         if (employees.isEmpty()){
-            throw new RuntimeException("No Employees Found..!");
+            throw new ResourceNotFoundException("No Employees Found..!");
         }
 
         return employees.stream()
@@ -83,7 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponse getByID(Long id) {
 
         Employee employee = employeeRepo.findById(id)
-                .orElseThrow(()-> new RuntimeException("Employee Not Found with ID : " + id));
+                .orElseThrow(()-> new ResourceNotFoundException("Employee Not Found with ID : " + id));
         return mapToResponse(employee);
     }
 
@@ -91,7 +93,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponse updateEmployee(Long id, EmployeeRequest request) {
 
         Employee employee = employeeRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee Not Found with ID : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee Not Found with ID : " + id));
 
         employee.setEmpName(request.getEmpName());
         employee.setEmail(request.getEmail());
@@ -109,7 +111,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteEmployee(Long id) {
         Employee employee = employeeRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee Not Found with ID : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee Not Found with ID : " + id));
         employeeRepo.delete(employee);
     }
 }
