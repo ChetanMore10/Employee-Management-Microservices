@@ -114,4 +114,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee Not Found with ID : " + id));
         employeeRepo.delete(employee);
     }
+
+    @Override
+    public EmployeeResponse getByEmployeeCodeAndEmpName(String employeeCode, String empName) {
+        Employee employee = employeeRepo.findByEmployeeCodeAndEmpName(employeeCode, empName)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee Nt Found with Employee Code :" + employeeCode + "and Employee Name :" + empName));
+        return mapToResponse(employee);
+    }
 }
