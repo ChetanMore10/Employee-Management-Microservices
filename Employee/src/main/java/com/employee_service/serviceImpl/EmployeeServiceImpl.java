@@ -89,23 +89,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         return mapToResponse(employee);
     }
 
-    @Override
-    public EmployeeResponse getByEmployeeCode(String employeeCode) {
-        Employee employee = employeeRepo.findByEmployeeCode(employeeCode)
-                .orElseThrow(()-> new ResourceNotFoundException("Employee Not Found with Name :" + employeeCode));
-        return mapToResponse(employee);
-    }
-
-    @Override
-    public List<EmployeeResponse> getByEmpName(String empName) {
-        List<Employee> employees = employeeRepo.findByEmpNameContainingIgnoreCase(empName);
-        if (employees.isEmpty()){
-            throw new ResourceNotFoundException("Employee not Found with name : " + empName);
-        }
-        return employees.stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public EmployeeResponse getByEmployeeCode(String employeeCode) {
+//        Employee employee = employeeRepo.findByEmployeeCode(employeeCode)
+//                .orElseThrow(()-> new ResourceNotFoundException("Employee Not Found with Name :" + employeeCode));
+//        return mapToResponse(employee);
+//    }
+//
+//    @Override
+//    public List<EmployeeResponse> getByEmpName(String empName) {
+//        List<Employee> employees = employeeRepo.findByEmpNameContainingIgnoreCase(empName);
+//        if (employees.isEmpty()){
+//            throw new ResourceNotFoundException("Employee not Found with name : " + empName);
+//        }
+//        return employees.stream()
+//                .map(this::mapToResponse)
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public EmployeeResponse updateEmployee(Long id, EmployeeRequest request) {

@@ -12,8 +12,8 @@ public interface EmployeeService {
     EmployeeResponse addEmployee(EmployeeRequest request);
     List<EmployeeResponse> getAll();
     EmployeeResponse getByID(Long id);
-    EmployeeResponse getByEmployeeCode(String employeeCode);
-    List<EmployeeResponse> getByEmpName(String empName);
+//    EmployeeResponse getByEmployeeCode(String employeeCode);
+//    List<EmployeeResponse> getByEmpName(String empName);
     EmployeeResponse updateEmployee(Long id, EmployeeRequest request);
     void deleteEmployee(Long id);
 }

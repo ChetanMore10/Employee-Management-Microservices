@@ -36,18 +36,18 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/code/{employeeCode}")
-    public ResponseEntity<EmployeeResponse> getByEmployeeCode(@PathVariable String employeeCode) {
-        EmployeeResponse response = employeeService.getByEmployeeCode(employeeCode);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/name/{empName}")
-    public ResponseEntity<List<EmployeeResponse>> getByEmpName(@PathVariable String empName) {
-
-        List<EmployeeResponse> response = employeeService.getByEmpName(empName);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @GetMapping("/code/{employeeCode}")
+//    public ResponseEntity<EmployeeResponse> getByEmployeeCode(@PathVariable String employeeCode) {
+//        EmployeeResponse response = employeeService.getByEmployeeCode(employeeCode);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/name/{empName}")
+//    public ResponseEntity<List<EmployeeResponse>> getByEmpName(@PathVariable String empName) {
+//
+//        List<EmployeeResponse> response = employeeService.getByEmpName(empName);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeResponse> updateEmpByID(@PathVariable Long id,@Valid @RequestBody EmployeeRequest request){
