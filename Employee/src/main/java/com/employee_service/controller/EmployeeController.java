@@ -5,6 +5,7 @@ import com.employee_service.dto.EmployeeResponse;
 import com.employee_service.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,14 @@ public class EmployeeController {
     public ResponseEntity<EmployeeResponse> addEmp(@Valid @RequestBody EmployeeRequest request){
         EmployeeResponse response = employeeService.addEmployee(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<Page<EmployeeResponse>> getEmployees(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        Page<EmployeeResponse> responses = employeeService.getEmployeesPage(page,size);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
     @GetMapping
