@@ -8,6 +8,9 @@ import com.employee_service.exception.ResourceNotFoundException;
 import com.employee_service.repository.EmployeeRepo;
 import com.employee_service.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,6 +68,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee saveEmployee = employeeRepo.save(employee);
 
         return mapToResponse(saveEmployee);
+    }
+
+    @Override
+    public Page<EmployeeResponse> getEmployeesPage(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Employee> employeePage = employeeRepo.findAll(pageable);
+
+        return employeePage.map(this::mapToResponse);
     }
 
     @Override
