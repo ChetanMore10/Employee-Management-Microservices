@@ -8,5 +8,6 @@ public class AddressServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AddressServiceApplication.class, args);
+        System.err.println("Application started Successfully...!");
 	}
 }
