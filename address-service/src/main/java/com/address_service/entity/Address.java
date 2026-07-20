@@ -35,5 +35,5 @@ public class Address {
     private String country;
 
     @Column(name = "pin_code",nullable = false)
-    private int pinCode;
+    private Integer pinCode;
 }

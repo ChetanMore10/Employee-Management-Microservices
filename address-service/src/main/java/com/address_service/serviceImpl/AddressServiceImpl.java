@@ -3,6 +3,8 @@ package com.address_service.serviceImpl;
 import com.address_service.dto.AddressRequest;
 import com.address_service.dto.AddressResponse;
 import com.address_service.entity.Address;
+import com.address_service.exception.DuplicateResourceException;
+import com.address_service.exception.ResourceNotFoundException;
 import com.address_service.repository.AddressRepo;
 import com.address_service.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,10 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressResponse addAddress(AddressRequest address) {
+        if (addressRepo.existsByEmployeeId(address.getEmployeeId())) {
+            throw new DuplicateResourceException(
+                    "Address already exists for Employee Id : " + address.getEmployeeId());
+        }
         Address address1 = mapToEntity(address);
         Address saveAddress = addressRepo.save(address1);
         return mapToResponse(saveAddress);
@@ -56,7 +62,7 @@ public class AddressServiceImpl implements AddressService {
     public List<AddressResponse> getAllAddress() {
         List<Address> addresses = addressRepo.findAll();
         if (addresses.isEmpty()){
-            throw new RuntimeException("No Address Found...!");
+            throw new ResourceNotFoundException("No Address Found...!");
         }
         return addresses.stream()
                 .map(this::mapToResponse)
@@ -66,14 +72,16 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressResponse getById(Long id) {
         Address address = addressRepo.findById(id)
-                .orElseThrow(()-> new RuntimeException("Address not found with id :"+id));
+                .orElseThrow(()-> new ResourceNotFoundException("Address not found with id :"+id));
         return mapToResponse(address);
     }
 
     @Override
     public AddressResponse updateAddress(Long id, AddressRequest address) {
         Address updateAddress = addressRepo.findById(id)
-                .orElseThrow(()-> new RuntimeException("Address not found with id :"+id));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Address not found with id : " + id));
+
         updateAddress.setAddressLine1(address.getAddressLine1());
         updateAddress.setAddressLine2(address.getAddressLine2());
         updateAddress.setCity(address.getCity());
@@ -88,7 +96,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void deleteAddress(Long id) {
         Address address = addressRepo.findById(id)
-                .orElseThrow(()-> new RuntimeException("Address not found with id :"+id));
+                .orElseThrow(()-> new ResourceNotFoundException("Address not found with id :"+id));
         addressRepo.delete(address);
     }
 }
