@@ -1,0 +1,18 @@
+Index: address-service/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.application.name=address-service\n\nserver.port=8082\n\nspring.datasource.url=jdbc:mysql://localhost:3306/Employee-Management-Microservices\nspring.datasource.username=root\nspring.datasource.password=Chetan@0713\nspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver\n\nspring.jpa.hibernate.ddl-auto=update\nspring.jpa.show-sql=true\nspring.jpa.properties.hibernate.format_sql=true\n\nspringdoc.api-docs.path=/v3/api-docs\nspringdoc.swagger-ui.path=/swagger-ui.html\n\n# Eureka Client Configuration\neureka.client.service-url.defaultZone=http://localhost:8761/eureka\neureka.client.register-with-eureka=true\neureka.client.fetch-registry=true
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/address-service/src/main/resources/application.properties b/address-service/src/main/resources/application.properties
+--- a/address-service/src/main/resources/application.properties	(revision 2ae2d6fd1c264fd931e50712181b3fd95392735f)
++++ b/address-service/src/main/resources/application.properties	(date 1784548392461)
+@@ -17,4 +17,4 @@
+ # Eureka Client Configuration
+ eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+ eureka.client.register-with-eureka=true
+-eureka.client.fetch-registry=true
+\ No newline at end of file
++eureka.client.fetch-registry=trueg
+\ No newline at end of file
