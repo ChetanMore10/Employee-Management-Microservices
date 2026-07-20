@@ -19,5 +19,5 @@ public class AddressResponse {
 
     private String country;
 
-    private int pinCode;
+    private Integer pinCode;
 }
