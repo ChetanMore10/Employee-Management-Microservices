@@ -1,10 +1,13 @@
 package com.employee_service.serviceImpl;
 
+import com.employee_service.dto.AddressResponse;
 import com.employee_service.dto.EmployeeRequest;
 import com.employee_service.dto.EmployeeResponse;
+import com.employee_service.dto.EmployeeWithAddressResponse;
 import com.employee_service.entity.Employee;
 import com.employee_service.exception.DuplicateResourceException;
 import com.employee_service.exception.ResourceNotFoundException;
+import com.employee_service.feign.AddressClient;
 import com.employee_service.repository.EmployeeRepo;
 import com.employee_service.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepo employeeRepo;
+
+    @Autowired
+    private AddressClient addressClient;
 
     // convert Request DTO to Entity
     private Employee mapToEntity(EmployeeRequest request){
@@ -143,5 +149,29 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee Not Found with ID : " + id));
         employeeRepo.delete(employee);
+    }
+
+    @Override
+    public EmployeeWithAddressResponse getEmployeeWithAddress(Long id) {
+        Employee employee = employeeRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee Not Found with ID : " + id));
+
+        System.out.println("Step 1");
+        EmployeeResponse employeeResponse = mapToResponse(employee);
+
+        System.out.println("Step 2");
+        AddressResponse addressResponse =
+                addressClient.getAddressByEmployeeId(employee.getId());
+
+        System.out.println("Step 3");
+        System.out.println(addressResponse);
+        EmployeeWithAddressResponse response = new EmployeeWithAddressResponse();
+        response.setEmployee(employeeResponse);
+
+        System.out.println("Step 4");
+        response.setAddress(addressResponse);
+
+        System.out.println("Step 5");
+        return response;
     }
 }

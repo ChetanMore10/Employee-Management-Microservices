@@ -1,4 +1,4 @@
-package com.address_service.dto;
+package com.employee_service.dto;
 
 import lombok.Data;
 

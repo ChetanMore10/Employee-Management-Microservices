@@ -36,6 +36,16 @@ public class AddressController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/employee/{employeeId}")
+    public ResponseEntity<AddressResponse> getAddressByEmployeeId(
+            @PathVariable Long employeeId) {
+
+        AddressResponse response =
+                addressService.getAddressByEmployeeId(employeeId);
+
+        return ResponseEntity.ok(response);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<AddressResponse> updateAddress(@PathVariable Long id, @RequestBody AddressRequest address){
         AddressResponse response = addressService.updateAddress(id, address);

@@ -77,6 +77,16 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    public AddressResponse getAddressByEmployeeId(Long employeeId) {
+        Address address = addressRepo.findByEmployeeId(employeeId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Address not found for Employee Id : " + employeeId));
+
+        return mapToResponse(address);
+    }
+
+    @Override
     public AddressResponse updateAddress(Long id, AddressRequest address) {
         Address updateAddress = addressRepo.findById(id)
                 .orElseThrow(() ->

@@ -1,7 +1,10 @@
 package com.employee_service.controller;
 
+import com.employee_service.dto.AddressResponse;
 import com.employee_service.dto.EmployeeRequest;
 import com.employee_service.dto.EmployeeResponse;
+import com.employee_service.dto.EmployeeWithAddressResponse;
+import com.employee_service.feign.AddressClient;
 import com.employee_service.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private AddressClient addressClient;
 
     @PostMapping
     public ResponseEntity<EmployeeResponse> addEmp(@Valid @RequestBody EmployeeRequest request){
@@ -58,6 +64,16 @@ public class EmployeeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/details")
+    public ResponseEntity<EmployeeWithAddressResponse> getEmployeeWithAddress(
+            @PathVariable Long id) {
+
+        EmployeeWithAddressResponse response =
+                employeeService.getEmployeeWithAddress(id);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeResponse> updateEmpByID(@PathVariable Long id,@Valid @RequestBody EmployeeRequest request){
         EmployeeResponse response = employeeService.updateEmployee(id,request);
@@ -68,5 +84,15 @@ public class EmployeeController {
     public ResponseEntity<?> deleteEmp(@PathVariable Long id){
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>("Employee Deleted Successfully..!", HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public String test(){
+
+        AddressResponse response =
+                addressClient.getAddressByEmployeeId(3L);
+
+        return response.getCity();
+
     }
 }
