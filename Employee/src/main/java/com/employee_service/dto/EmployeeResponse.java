@@ -15,20 +15,12 @@ import java.time.LocalDate;
 public class EmployeeResponse {
 
     private Long id;
-
     private String employeeCode;
-
     private String empName;
-
     private String email;
-
     private Long phoneNo;
-
     private String department;
-
     private String designation;
-
     private BigDecimal salary;
-
     private LocalDate hireDate;
 }

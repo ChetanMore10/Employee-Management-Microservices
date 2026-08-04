@@ -2,6 +2,7 @@ package com.employee_service.service;
 
 import com.employee_service.dto.EmployeeRequest;
 import com.employee_service.dto.EmployeeResponse;
+import com.employee_service.dto.EmployeeWithAddressResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +19,5 @@ public interface EmployeeService {
     List<EmployeeResponse> getByEmpName(String empName);
     EmployeeResponse updateEmployee(Long id, EmployeeRequest request);
     void deleteEmployee(Long id);
+    EmployeeWithAddressResponse getEmployeeWithAddress(Long id);
 }

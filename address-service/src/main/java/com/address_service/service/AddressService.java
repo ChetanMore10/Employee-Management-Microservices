@@ -12,6 +12,7 @@ public interface AddressService {
     AddressResponse addAddress(AddressRequest address);
     List<AddressResponse> getAllAddress();
     AddressResponse getById(Long id);
+    AddressResponse getAddressByEmployeeId(Long employeeId);
     AddressResponse updateAddress(Long id, AddressRequest address);
     void deleteAddress(Long id);
 }
